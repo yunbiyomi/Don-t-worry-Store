@@ -4,7 +4,7 @@ const messageForm = document.querySelector("#message");
 const socket =  new WebSocket(`ws://${window.location.host}`);
 
 function makeMessage(type, payload){
-    const msg = {type, payload};
+    const msg = { type, payload };
     return JSON.stringify(msg);
 }
 
@@ -14,7 +14,7 @@ socket.addEventListener("open", () => {
 
 socket.addEventListener("message", (message) => {
     const li = document.createElement("li");
-    li.textContent = message.data;
+    li.innerText = message.data;
     messageList.append(li);
 })
 

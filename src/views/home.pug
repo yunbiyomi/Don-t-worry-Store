@@ -11,8 +11,11 @@ html(lang="ko")
             h1 걱정마! 켓
         main
             p 걱정마! 켓은 화상 채팅을 통해 실시간으로 물건을 확인하며 물건을 사고팔수 있는 중고거래 사이트입니다.
+            form#nickName 
+                input(type="text" placeholder="닉네임을 입력해주세요." required) 
+                button 입력
             ul
-            form
+            form#message
                 input(type="text" placeholder="메세지를 입력해주세요." required) 
                 button 보내기
         script(src="/public/js/app.js")

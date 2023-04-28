@@ -1,6 +1,7 @@
 import http from "http";
 import WebSocket from "ws";
 import express from "express";
+import { log } from "console";
 
 const app = express();
 
@@ -8,7 +9,6 @@ app.set("view engine", "pug");
 app.set("views", __dirname + "/views");
 app.use("/public", express.static(__dirname + "/public")); // 폴더를 유저에게 공개
 app.get("/", (req, res) => res.render("home")); // 홈페이지로 이동 시 사용될 템플릿을 렌더
-app.get("/*", (_, res) => res.redirect("/"));
 
 const handleListen = () => console.log('listening on http://localhost:3000');
 
@@ -29,8 +29,8 @@ wss.on("connection", (socket) => {
                 sockets.forEach((aSocket) =>
                 aSocket.send(`${socket.nickname}: ${message.payload}`)
                 );
-            case "nickname":
-                socket["nickname"] = message.payload;
+        case "nickname":
+            socket["nickname"] = message.payload;
         }
     });
 });

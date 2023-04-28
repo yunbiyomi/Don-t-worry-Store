@@ -4,7 +4,7 @@ const messageForm = document.querySelector("#message");
 const socket =  new WebSocket(`ws://${window.location.host}`);
 
 function makeMessage(type, payload){
-    const msg = { type, payload };
+    const msg = {type, payload};
     return JSON.stringify(msg);
 }
 
@@ -14,26 +14,28 @@ socket.addEventListener("open", () => {
 
 socket.addEventListener("message", (message) => {
     const li = document.createElement("li");
-    li.innerText = message.data;
+    li.textContent = message.data;
     messageList.append(li);
 })
 
 socket.addEventListener("close", () => {
-    console.log("서버와의 연결이 끊어졌습니다.");
+    console.log("서버와의 연결이 끊어졌습니다.");d
 })
-
 
 function handleSubmit(event) {
     event.preventDefault();
     const input = messageForm.querySelector("input");
-    socket.send(makeMessage("새로운 메세지: ", input.value));
+    socket.send(makeMessage("new_message", input.value));
+    const li = document.createElement("li");
+    li.textContent = `You: ${input.value}`;
+    messageList.append(li);
     input.value = "";
 }
 
 function handleNickSubmit(event) {
     event.preventDefault();
     const input = nickNameForm.querySelector("input");
-    socket.send(makeMessage("닉네임", input.value));
+    socket.send(makeMessage("nickname", input.value));
     input.value = "";
 }
 

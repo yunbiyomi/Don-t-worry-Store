@@ -1,43 +1,52 @@
-const messageList = document.querySelector("ul");
-const nickNameForm = document.querySelector("#nickName");
-const messageForm = document.querySelector("#message");
-const socket =  new WebSocket(`ws://${window.location.host}`);
+const socket = io();
 
-function makeMessage(type, payload){
-    const msg = {type, payload};
-    return JSON.stringify(msg);
+const myFace = document.getElementById("myFace");
+const muteBtn = document.getElementById("mute");
+const cameraBtn = document.getElementById("camera");
+
+let myStream;
+let muted = false;
+let cameraOff = false;
+
+async function getMedia() {
+    try {
+        myStream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+            video: true,
+        });
+        myFace.srcObject = myStream;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-socket.addEventListener("open", () => {
-    console.log("서버와 연결되었습니다.");
-})
+getMedia();
 
-socket.addEventListener("message", (message) => {
-    const li = document.createElement("li");
-    li.textContent = message.data;
-    messageList.append(li);
-})
-
-socket.addEventListener("close", () => {
-    console.log("서버와의 연결이 끊어졌습니다.");d
-})
-
-function handleSubmit(event) {
-    event.preventDefault();
-    const input = messageForm.querySelector("input");
-    socket.send(makeMessage("new_message", input.value));
-    const li = document.createElement("li");
-    li.textContent = `You: ${input.value}`;
-    messageList.append(li);
-    input.value = "";
+function handleMuteClick() {
+    myStream
+    .getAudioTracks()
+    .forEach((track) => (track.enable = !track.enabled));
+    if (!muted) {
+        muteBtn.textContent = "음소거 해제";
+        muted = true;
+    }
+    else {
+        muteBtn.textContent = "음소거";
+        muted = false;
+    }
 }
 
-function handleNickSubmit(event) {
-    event.preventDefault();
-    const input = nickNameForm.querySelector("input");
-    socket.send(makeMessage("nickname", input.value));
-    input.value = "";
+function handleCameraClick() {
+    console.log(myStream.getVideoTracks());
+    if(cameraOff) {
+        cameraBtn.textContent = "카메라 끄기";
+        cameraOff = false;
+    }
+    else {
+        cameraBtn.textContent = "카메라 켜기";
+        cameraOff = true;
+    }
 }
 
-messageForm.addEventListener("submit", handleSubmit);
-nickNameForm.addEventListener("submit", handleNickSubmit);
+muteBtn.addEventListener("click", handleMuteClick);
+cameraBtn.addEventListener("click", handleCameraClick);

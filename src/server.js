@@ -17,28 +17,6 @@ wsServer.on("connection", (socket) => {
     console.log(socket);
 })
 
-// const wss = new WebSocket.Server({server}); // HTTP 서버, webSoket 서버 둘다 가능
-
-// const sockets = [];
-
-// wss.on("connection", (socket) => {
-//     sockets.push(socket);
-//     socket["nickname"] = "익명";
-//     console.log("브라우저에 연결되었습니다.");
-//     socket.on("close", () => console.log("브라우저와의 연결이 끊어졌습니다."));
-//     socket.on("message", (msg) => {
-//         const message = JSON.parse(msg);
-//         switch (message.type) {
-//             case "new_message":
-//                 sockets.forEach((aSocket) =>
-//                 aSocket.send(`${socket.nickname}: ${message.payload}`)
-//                 );
-//         case "nickname":
-//             socket["nickname"] = message.payload;
-//         }
-//     });
-// });
-
 wsServer.on("connection", (socket) => {
     socket.on("join_room", (roomName) => {
         socket.join(roomName);

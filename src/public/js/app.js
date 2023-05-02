@@ -89,6 +89,13 @@ function handleCameraClick() {
 
 async function handleCameraChange() {
     await getMedia(camerasSelect.value);
+    if(myPeerConnection) {
+        const videoTrack = myStream.getVideoTracks()[0]; // 나 자신을 위한 myStream
+        const videoSender = myPeerConnection
+        .getSenders()
+        .find((sender) => sender.track.kind === "video");
+        videoSender.replaceTrack(videoTrack);
+    }
 }
 
 muteBtn.addEventListener("click", handleMuteClick);
@@ -149,7 +156,26 @@ socket.on("ice", (ice) => {
 // RTC code
 
 function makeConnection() {
-    myPeerConnection = new RTCPeerConnection();
+    myPeerConnection = new RTCPeerConnection({
+        iceServers: [
+            {
+                urls: [ "stun:ntk-turn-1.xirsys.com" ]
+            },
+            {
+                username: "ERTziwRItUcMUWOCTVlG7kgJ3X-QQQXbI8QNi9ca89u8grGuCWrTEHoD9ZZU7vG1AAAAAGRQ2NF5dW5iaXlvbWk=",
+                credential: "5711a872-e8cc-11ed-97b5-0242ac120004",
+                urls: [
+                    "turn:ntk-turn-1.xirsys.com:80?transport=udp",
+                    "turn:ntk-turn-1.xirsys.com:3478?transport=udp",
+                    "turn:ntk-turn-1.xirsys.com:80?transport=tcp",
+                    "turn:ntk-turn-1.xirsys.com:3478?transport=tcp",
+                    "turns:ntk-turn-1.xirsys.com:443?transport=tcp",
+                    "turns:ntk-turn-1.xirsys.com:5349?transport=tcp"
+                ]
+            }]
+        }
+    );
+
     myPeerConnection.addEventListener("icecandidate", handleIce);
     myPeerConnection.addEventListener("addstream", handleAddStream);
     myStream

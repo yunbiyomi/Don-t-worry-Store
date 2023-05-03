@@ -22,8 +22,19 @@ def regist():
     detail_img_url = _upload_file(detail_img)
 
     # 상품 정보 저장
-    Product.insert_one(form_data, detail_img_url, thumbnail_img_url)
+    Product.insert_one(form_data, thumbnail_img_url, detail_img_url)
     return "상품 등록 API입니다."
+
+
+
+# 상품 리스트 조회 API
+@product.route('/list', methods=['GET'])
+def get_products():
+    # 상품 리스트 정보 (mongoDB products 컬렉션에 있는 documents)
+    products = Product.find()
+    return render_template('products.html', products=products)
+
+
 
 def _upload_file(img_file):
     timestamp = str(datetime.now().timestamp())
@@ -33,4 +44,4 @@ def _upload_file(img_file):
     img = os.path.join(image_path, filename)
     img_file.save(img)
 
-    return f'./static/uploads' + filename
+    return f'/static/uploads/' + filename

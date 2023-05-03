@@ -1,6 +1,7 @@
 from .mongodb import conn_mongodb
 from datetime import datetime
 
+# mongoDB product 컬렉션에서 있는 일들
 class Product():
     @staticmethod
     def insert_one(product, thumbnail_img_url, detail_img_url):
@@ -15,3 +16,9 @@ class Product():
             'created_at': int(datetime.now().timestamp()),
             'update_at': int(datetime.now().timestamp())
         })
+
+    @staticmethod
+    def find():
+        db = conn_mongodb()
+        products = db.products.find({})
+        return products

@@ -4,6 +4,8 @@ from controllers.user import user
 
 app = Flask(__name__)
 
+app.secret_key = 'store'
+
 app.register_blueprint(product, url_prefix='/products', methods=['GET', 'POST'])
 app.register_blueprint(user, url_prefix='/users', methods=['GET', 'POST'])
 

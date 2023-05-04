@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+            alert('{{messages[-1]}}')
+        </script>
+    {% endif %}
+{% endwith %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <div>
+                <hr>
+                <h2 class="pt-2 pb-2 text-center">로그인</h2>
+                <hr>
+            </div>
+            <form action="/users/login" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="email" class="form-label">이메일</label>
+                    <input name="email" type="text" class="form-control" id="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">비밀번호</label>
+                    <input name="password" type="password" class="form-control" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">로그인</button>
+            </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+{% endblock %}

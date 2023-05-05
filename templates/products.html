@@ -104,8 +104,10 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                     <a href="/products/{{product['_id']}}/detail" class="btn btn-sm btn-outline-primary">보기</a>
-                                    <a href="/products/{{product['_id']}}/edit" class="btn btn-sm btn-outline-secondary">수정</a>
-                                    <a href="/products/{{product['_id']}}/delete" class="btn btn-sm btn-outline-danger">삭제</a>
+                                    {% if session.get('user_id') %}
+                                        <a href="/products/{{product['_id']}}/edit" class="btn btn-sm btn-outline-secondary">수정</a>
+                                        <a href="/products/{{product['_id']}}/delete" class="btn btn-sm btn-outline-danger">삭제</a>
+                                    {% endif %}
                                     </div>
                                     <small class="text-body-secondary">9 mins</small>
                                 </div>

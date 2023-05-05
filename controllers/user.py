@@ -1,6 +1,7 @@
 from flask import request, render_template, flash, redirect, url_for, session
 from .blueprint import user
 from .blueprint import product
+from .auth import check_login, redirect_to_longin_form, is_admin
 from models.user import User
 
 
@@ -43,13 +44,21 @@ def login():
         return render_template('user_login.html')
     else:
         session['user_id'] = str(user['_id'])
+        if is_admin():
+            session['is_admin'] = True
+        
         return redirect(url_for('product.get_products'))
-    
 
 
 
 # 로그아웃
 @user.route('/logout', methods=['GET'])
 def logout():
+    user = check_login()
+
+    if not user:
+        return redirect_to_longin_form()
+
     session.pop('user_id', None)
+    session.pop('is_admin', None)
     return redirect(url_for('product.get_products'))

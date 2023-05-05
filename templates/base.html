@@ -22,17 +22,17 @@
                 <li class="nav-item">
                     <a class="nav-link fs-5" aria-current="page" href="/products/list">상품 둘러보기</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link fs-5" href="/products/form">상품 등록</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fs-5" href="/users/form">회원가입</a>
-                </li>
                 {% if session.get('user_id') %}
+                    <li class="nav-item">
+                        <a class="nav-link fs-5" href="/products/form">상품 등록</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link fs-5" href="/users/logout">로그아웃</a>
                     </li>
                 {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link fs-5" href="/users/form">회원가입</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link fs-5" href="/users/login">로그인</a>
                     </li>

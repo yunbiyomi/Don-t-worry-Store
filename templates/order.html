@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <div class="card mb-3 mt-5">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{order['product']['thumbnail_img']}}" class="img-fluid rounded-start" width="100%" height="auto" alt="상품의 대표 이미지">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{order['product']['name']}}</h5>
+                            <hr>
+                            <p class="card-text">{{order['product']['description']}}</p>
+                            <hr>
+                            <div class="d-flex flex-row-reverse align-items-center bd-highlight">
+                                <div class="p-2 bd-highlight">
+                                    <p class="card-text">{{order['product']['price']}}원</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>
+{% endblock %}

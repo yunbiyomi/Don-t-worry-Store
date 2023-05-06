@@ -8,7 +8,7 @@ from models.order import Order
 
 
 # 구매 완료한 주문 목록
-@order.route('/list')
+@order.route('/list', methods=['GET'])
 def get_orders():
     user = check_login()
     if not user:
@@ -19,7 +19,7 @@ def get_orders():
 
 
 # 구매 완료한 주문 목록 상세 페이지
-@order.route('/<order_id>')
+@order.route('/<order_id>', methods=['GET'])
 def detail(order_id):
     user = check_login()
     if not user:

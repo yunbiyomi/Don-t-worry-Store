@@ -4,6 +4,7 @@ from .blueprint import product
 from .blueprint import user
 from .auth import check_login, redirect_to_longin_form
 from models.product import Product
+from models.order import Order
 from datetime import datetime
 import os
 
@@ -91,11 +92,34 @@ def update(product_id):
 
 
 
-# 상품 정보 페이지 API
+# 상품 상세 정보 페이지 API
 @product.route('/<product_id>/detail', methods=['GET'])
 def detail(product_id):
     product = Product.find_one(product_id)
     return render_template('product.html', product=product)
+
+
+# 상품 주문 페이지 API
+@product.route('/<product_id>/order', methods=['GET'])
+def order_form(product_id):
+    product = Product.find_one(product_id)
+    return render_template('order_form.html', product=product)
+
+
+# 주문 생성 API
+@product.route('/<product_id>/order', methods=['GET', 'POST'])
+def order(product_id):
+    user = check_login()
+    if not user:
+        return redirect_to_longin_form()
+
+    product = Product.find_one(product_id)
+    form_data = request.form
+
+    Order.insert_one(product, form_data, user)
+
+    return render_template('payment_complete.html')
+
 
 
 # 이미지 저장

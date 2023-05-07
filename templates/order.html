@@ -5,6 +5,9 @@
     <div class="row">
         <div class="col-2"></div>
         <div class="col-8">
+            <hr>
+            <h3 class="text-center">완료된 주문 상세 페이지</h3>
+            <hr>
             <div class="card mb-3 mt-5">
                 <div class="row g-0">
                     <div class="col-md-4">
@@ -24,6 +27,18 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    주문자 정보 / 배송지
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">이름: {{order['user_name']}}</li>
+                    <li class="list-group-item">연락처: {{order['user_phone']}}</li>
+                    <li class="list-group-item">우편번호: {{order['postcode']}}</li>
+                    <li class="list-group-item">주소: {{order['address']}}</li>
+                    <li class="list-group-item">상세 주소: {{order['detail_address']}} {{order['extra_address']}}</li>
+                </ul>
             </div>
         </div>
         <div class="col-2"></div>

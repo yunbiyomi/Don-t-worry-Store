@@ -1,7 +1,7 @@
 from flask import request, render_template, redirect, url_for, session
 from werkzeug.utils import secure_filename
 from .blueprint import product
-from .blueprint import user
+from .blueprint import payment
 from .auth import check_login, redirect_to_longin_form
 from models.product import Product
 from models.order import Order
@@ -116,9 +116,9 @@ def order(product_id):
     product = Product.find_one(product_id)
     form_data = request.form
 
-    Order.insert_one(product, form_data, user)
+    order_id = Order.insert_one(product, form_data, user)
 
-    return render_template('payment_complete.html')
+    return redirect(url_for('payment.request_payment', order_id=order_id))
 
 
 

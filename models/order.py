@@ -8,7 +8,7 @@ class Order():
     @staticmethod
     def insert_one(product, form, user):
         db = conn_mongodb()
-        db.orders.insert_one({
+        new_order_doc = db.orders.insert_one({
             'status': 'pending',
             'product': product,
             'postcode': form['postcode'],
@@ -22,14 +22,21 @@ class Order():
             'update_at': int(datetime.now().timestamp())
         })
 
+        return new_order_doc.inserted_id
 
-    def find():
+
+    def find(match={}):
         db = conn_mongodb()
-        orders = db.orders.find({})
+        orders = db.orders.find(match)
         return orders
     
     
     def find_one(order_id):
         db = conn_mongodb()
-        order = db.orders.find({'_id': ObjectId(order_id)})
+        order = db.orders.find_one({'_id': ObjectId(order_id)})
         return order
+    
+
+    def update_one(order_id, status):
+        db = conn_mongodb()
+        db.orders.update_one({'_id': ObjectId(order_id)}, {'$set': status})

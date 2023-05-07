@@ -4,23 +4,38 @@ html(lang="ko")
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title 걱정마! 켓
-        link(rel="stylesheet", href="https://unpkg.com/mvp.css")
-        link(rel="shortcut icon" href="#")
-    body
-        header 
-            h1 걱정마! 켓
+        title 걱정마!켓
         main
-            div#welcome
+        link(rel="stylesheet", href="https://unpkg.com/mvp.css")
+        link(rel='stylesheet', href="/public/home.css")
+    body
+        header
+            h1 걱정마!켓
+        main
+        main
+            div#waitRoom
                 form
-                    input(type="text" placeholder="room name", required)
-                    button Enter room
-            div#call
-                div#myStream
-                    video#myFace(autoplay,playsinline, width="500", height="500")
-                    button#mute 음소거 
-                    button#camera 카메라 끄기
-                    select#cameras
-                    video#peerFace(autoplay,playsinline, width="500", height="500")
-        script(src="/socket.io/socket.io.js")
-        script(src="/public/js/app.js")
+                    p 
+                        |닉네임과 방번호를 입력해주세요.
+                    input(id="nickname", placeholder="nickname", required, type="text")
+                    input(id="roomName", placeholder="room name", required, type="text")
+                    button 접속하기
+            div#callRoom
+                div#videoCall
+                    div#myStream
+                        h2 You:
+                        video#myVideo(autoplay, playinline, width="400", height="400")
+                        button#audio 음소거 
+                        button#camera 카메라 끄기
+                        select#cameraSelect
+                    div#peerStream
+                        h2 Opponent:
+                        video#peerVideo(autoplay, playinline, width="400", height="400")
+                div#chatContainer
+                    h2 💬 채팅
+                    ul#messages 
+                    form#chat
+                        input(type="text", placeholder="Type a message")
+                        button 보내기
+        script(src="/socket.io/socket.io.js") 
+        script(src="/public/app.js") 

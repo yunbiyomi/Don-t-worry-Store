@@ -127,7 +127,7 @@ async function initCall() {
 
 waitRoomForm.addEventListener("submit", handleRoomSubmit);
 
-// --------- Socket.io 사용한 데이터 교환 ----------
+// --------- Socket.io 사용한 데이터 채널 ----------
 
 socket.on("welcome", async () => {
     myDataChannel = myPeerConnection.createDataChannel("chat");
@@ -169,7 +169,7 @@ function handleAddStream(data) {
     peerVideo.srcObject = data.stream;
 }
 
-// P2P 연결
+
 function makeConnection() {
     myPeerConnection = new RTCPeerConnection();
     myPeerConnection.addEventListener("icecandidate", handleIce);

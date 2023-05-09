@@ -14,7 +14,6 @@ class Product():
             'description': product['description'],
             'thumbnail_img': thumbnail_img_url,
             'detail_img': detail_img_url,
-            'user': 'admin',
             'created_at': int(datetime.now().timestamp()),
             'update_at': int(datetime.now().timestamp())
         })

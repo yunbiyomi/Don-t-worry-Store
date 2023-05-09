@@ -12,7 +12,6 @@ const waitRoomForm = waitRoom.querySelector("form");
 
 const callRoom = document.getElementById("callRoom");
 
-// callRoom.hidden = true;
 callRoom.style.display = "none";
 
 let myStream;
@@ -59,9 +58,9 @@ function handleAudioClick() {
         .forEach((track) => (track.enabled = !track.enabled));
 
     if (!muted) {
-        audioBtn.innerText = "Unmute";
+        audioBtn.innerText = "음소거 해제";
     } else {
-        audioBtn.innerText = "Mute";
+        audioBtn.innerText = "음소거";
     }
     muted = !muted;
 }
@@ -71,9 +70,9 @@ function handleCameraClick() {
         .getVideoTracks()
         .forEach((track) => (track.enabled = !track.enabled));
     if (!cameraOff) {
-        cameraBtn.innerText = "Turn Camera On";
+        cameraBtn.innerText = "카메라 켜기";
     } else {
-        cameraBtn.innerText = "Turn Camera Off";
+        cameraBtn.innerText = "카메라 끄기";
     }
     cameraOff = !cameraOff;
 }
@@ -94,7 +93,7 @@ audioBtn.addEventListener("click", handleAudioClick);
 cameraBtn.addEventListener("click", handleCameraClick);
 cameraSelect.addEventListener("change", handleCameraChange);
 
-// --------------- wait room form (choose and enter a room) -----------------
+// --------------- 채팅 첫 메인 페이지 -----------------
 
 function showRoom() {
     waitRoom.style.display = "none";
@@ -128,7 +127,7 @@ async function initCall() {
 
 waitRoomForm.addEventListener("submit", handleRoomSubmit);
 
-// --------- Socket Code ----------
+// --------- Socket.io 사용한 데이터 교환 ----------
 
 socket.on("welcome", async () => {
     myDataChannel = myPeerConnection.createDataChannel("chat");
@@ -146,7 +145,6 @@ socket.on("receive_offer", async (offer) => {
     });
     myPeerConnection.setRemoteDescription(offer);
 
-    // getMedia
     const answer = await myPeerConnection.createAnswer();
     myPeerConnection.setLocalDescription(answer);
     socket.emit("send_answer", answer, roomName);
@@ -160,7 +158,7 @@ socket.on("receive_offer", async (offer) => {
     myPeerConnection.addIceCandidate(ice);
 });
 
-// --------- RTC Code ---------
+// --------- WebRTC ---------
 
 function handleIce(data) {
     socket.emit("send_ice", data.candidate, roomName);
@@ -171,11 +169,11 @@ function handleAddStream(data) {
     peerVideo.srcObject = data.stream;
 }
 
+// P2P 연결
 function makeConnection() {
     myPeerConnection = new RTCPeerConnection();
     myPeerConnection.addEventListener("icecandidate", handleIce);
 
-    // "addstream" event
     myPeerConnection.addEventListener("addstream", handleAddStream);
 
     myStream
@@ -183,7 +181,7 @@ function makeConnection() {
         .forEach((track) => myPeerConnection.addTrack(track, myStream));
 }
 
-// --------- Data Channel Code ---------
+// --------- 채팅 ---------
 
 function addMessage(e) {
     const li = document.createElement("li");
@@ -195,7 +193,7 @@ function handleChatSubmit(e) {
     e.preventDefault();
     const input = chatForm.querySelector("input");
     myDataChannel.send(`${nickname}: ${input.value}`);
-    addMessage({ data: `You: ${input.value}` });
+    addMessage({ data: `${nickname}: ${input.value}` });
     input.value = "";
 }
 

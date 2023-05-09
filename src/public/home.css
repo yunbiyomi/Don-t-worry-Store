@@ -102,10 +102,10 @@ h1 {
     list-style: none;
     padding: 10px 40px;
     border: 1px solid #0B62E0;
-    background: #0B62E0;
+    background: #ffffff;
     margin: 10px;
-    border-radius: 10px;
-    color: #ffffff;
+    border-radius: 20px;
+    color: #0B62E0;
 }
 
 #chat {

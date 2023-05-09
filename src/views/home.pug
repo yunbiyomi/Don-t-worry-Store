@@ -10,26 +10,27 @@ html(lang="ko")
         link(rel='stylesheet', href="/public/home.css")
     body
         header
-            h1 걱정마!켓
+            h1 🛒 걱정마!켓
         main
         main
             div#waitRoom
                 form
                     p 
-                        |닉네임과 방번호를 입력해주세요.
-                    input(id="nickname", placeholder="nickname", required, type="text")
-                    input(id="roomName", placeholder="room name", required, type="text")
+                        |사용하실 닉네임과 올바른 방번호를 입력해주세요.
+                    input(id="nickname", placeholder="닉네임", required, type="text")
+                    input(id="roomName", placeholder="방번호", required, type="text")
                     button 접속하기
             div#callRoom
                 div#videoCall
                     div#myStream
-                        h2 You:
+                        h2 🗣️ 사용자
                         video#myVideo(autoplay, playinline, width="400", height="400")
                         button#audio 음소거 
                         button#camera 카메라 끄기
+                        h3 카메라 선택
                         select#cameraSelect
                     div#peerStream
-                        h2 Opponent:
+                        h2 🗣️ 상대방
                         video#peerVideo(autoplay, playinline, width="400", height="400")
                 div#chatContainer
                     h2 💬 채팅

@@ -84,10 +84,10 @@
                 {% for product in products %}
                     <div class="col">
                         <div class="card shadow-sm">
-                            <img src="{{product['thumbnail_img']}}" class="bd-placeholder-img card-img-top" width="100%" height="225" >
+                            <img src="{{product['thumbnail_img']}}" class="bd-placeholder-img card-img-top" width="100%" height="350" >
                             <div class="card-body">
                                 <h4>{{product['name']}}</h4>
-                                <p class="card-text">상품 가격: {{product['price']}}</p>
+                                <p class="card-text">상품 가격: {{product['price']}}원</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                     <a href="/products/{{product['_id']}}/detail" class="btn btn-sm btn-outline-primary">보기</a>

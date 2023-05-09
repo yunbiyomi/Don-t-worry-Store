@@ -5,7 +5,7 @@ from flask_bcrypt import generate_password_hash, check_password_hash # 비밀번
 
 # mongoDB product 컬렉션에서 있는 일들
 class User():
-    # 상품 등록
+    # 회원가입
     @staticmethod
     def insert_one(form_data):
         db = conn_mongodb()
